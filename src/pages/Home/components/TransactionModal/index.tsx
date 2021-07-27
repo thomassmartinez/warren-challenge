@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {formatCurrency} from 'utils/formatCurrency';
-import {ITransaction, TransactionStatus} from 'services/api/transactions';
+import {ITransaction} from 'services/api/transactions';
 
 import {
   Container,
@@ -27,13 +27,21 @@ export const Modal: React.FC<IPropsModal> = ({open, data, openCloseModal}) => {
   const [statusProgress, setStatuProgress] = useState('');
 
   const handleWidthProgress = useCallback(() => {
-    const statusProgress = {
-      [TransactionStatus.created]: '4%',
-      [TransactionStatus.processing]: '50%',
-      [TransactionStatus.processed]: '100%',
-    } as Record<TransactionStatus, string>;
+    switch (data.status) {
+      case 'created':
+        setStatuProgress('4%');
+        break;
+      case 'processing':
+        setStatuProgress('50%');
+        break;
+      case 'processed':
+        setStatuProgress('100%');
+        break;
 
-    setStatuProgress(statusProgress[data.status]);
+      default:
+        setStatuProgress('');
+        break;
+    }
   }, [data.status]);
 
   useEffect(() => {
@@ -49,7 +57,6 @@ export const Modal: React.FC<IPropsModal> = ({open, data, openCloseModal}) => {
         </Header>
         <Section>
           <Progress data-testid="progress" statusProgress={statusProgress} />
-
           <BoxProgress>
             <H5>Solicitado</H5>
             <H5>Processando</H5>
@@ -57,7 +64,7 @@ export const Modal: React.FC<IPropsModal> = ({open, data, openCloseModal}) => {
           </BoxProgress>
           <Box>
             <H1>Transferido de</H1>
-            <Divider></Divider>
+            <Divider />
             <div>
               <H6 data-testid="from">{data.from}</H6>
               <H6 data-testid="from-price">{formatCurrency(data.amount)}</H6>
@@ -65,7 +72,7 @@ export const Modal: React.FC<IPropsModal> = ({open, data, openCloseModal}) => {
           </Box>
           <Box>
             <H1>Para de</H1>
-            <Divider></Divider>
+            <Divider />
             <div>
               <H6 data-testid="to">{data.to}</H6>
               <H6 data-testid="to-price">{formatCurrency(data.amount)}</H6>

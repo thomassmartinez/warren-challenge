@@ -42,6 +42,7 @@ export const Select = styled.select`
   margin-right: 20px;
   border: 1px solid var(--white);
   border-radius: 5px;
+  text-transform: capitalize;
 `;
 
 export const Table = styled.table`
@@ -60,8 +61,8 @@ export const Table = styled.table`
   td {
     padding: 15px 30px;
     border: 0;
-    /* box-shadow: ; */
     background: var(--white);
+    text-transform: lowercase;
   }
 
   @media screen and (max-width: 700px) and (min-width: 350px) {

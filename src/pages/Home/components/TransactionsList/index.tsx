@@ -5,7 +5,7 @@ import {ITransaction, TransactionsServices} from 'services/api/transactions';
 import {Modal} from 'pages/Home/components/TransactionModal';
 import {formatCurrency} from 'utils/formatCurrency';
 
-export const TransferList: React.FC = () => {
+export const TransactionsList: React.FC = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [transaction, setTransaction] = useState<ITransaction>(
     {} as ITransaction,
@@ -22,7 +22,7 @@ export const TransferList: React.FC = () => {
   const getTransactions = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await TransactionsServices.getTransaction();
+      const response = await TransactionsServices.getTransactions();
       setTransactions(response);
       setFilterTransaction(response);
     } catch (error) {
@@ -82,13 +82,9 @@ export const TransferList: React.FC = () => {
     [transactions],
   );
 
-  const handleSelectChange = useCallback(
-    (e) => {
-      setFilterSelected(e.target.value);
-      getTransactions();
-    },
-    [getTransactions],
-  );
+  const handleSelectChange = useCallback((e) => {
+    setFilterSelected(e.target.value);
+  }, []);
 
   return (
     <>
@@ -97,11 +93,12 @@ export const TransferList: React.FC = () => {
           <Search
             type="text"
             placeholder="Pesquise pelo titulo"
+            data-testid="search"
             onChange={(e) => searchItem(e, filterSelected)}
           />
-          <Select onChange={(e) => handleSelectChange(e)}>
-            <option value="status">Status</option>
-            <option value="title">Título</option>
+          <Select onChange={(e) => handleSelectChange(e)} data-testid="select">
+            <option value="status">status</option>
+            <option value="title">título</option>
           </Select>
           <Table>
             <thead>

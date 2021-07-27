@@ -1,2 +1,2 @@
 export * from './Header/index';
-export * from './TransactionsTable/index';
+export * from './TransactionsList/index';

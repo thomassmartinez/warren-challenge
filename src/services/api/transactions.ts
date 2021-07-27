@@ -1,23 +1,18 @@
 import GenericException from 'errors/GenericException';
 import {Api} from 'services/settings-api/api';
 
-export enum TransactionStatus {
-  created = 'created',
-  processing = 'processing',
-  processed = 'processed',
-}
 export interface ITransaction {
   id: string;
   title: string;
   description: string;
-  status: TransactionStatus;
+  status: string;
   amount: number;
   date: string;
   from: string;
   to: string;
 }
 
-const getTransaction = async (): Promise<ITransaction[]> => {
+const getTransactions = async (): Promise<ITransaction[]> => {
   try {
     const {data} = await Api().get<ITransaction[]>('transactions');
 
@@ -39,5 +34,5 @@ const getTransactionById = async (id: string): Promise<ITransaction> => {
 
 export const TransactionsServices = {
   getTransactionById,
-  getTransaction,
+  getTransactions,
 };

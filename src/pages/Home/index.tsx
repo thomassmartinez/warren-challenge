@@ -1,11 +1,11 @@
 import React from 'react';
-import {Header, TransferList} from './components/';
+import {Header, TransactionsList} from './components/';
 
 export const Home: React.FC = () => {
   return (
     <>
       <Header />
-      <TransferList />
+      <TransactionsList />
     </>
   );
 };
