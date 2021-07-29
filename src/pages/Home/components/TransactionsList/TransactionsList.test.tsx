@@ -71,51 +71,37 @@ describe('Transactions List', () => {
     });
   });
 
-  it('should render table with status defined by selected options', async () => {
-    const {getByTestId, getByText} = render(<TransactionsList />);
-
-    const filterSelected = getByTestId('select');
-    fireEvent.change(filterSelected, {target: {value: 'status'}});
+  it('should filter by the title Resgate', async () => {
+    const {getByTestId, getAllByText, queryByText} = render(
+      <TransactionsList />,
+    );
 
     await waitFor(() => {
-      expect(getByText('status')).toBeTruthy();
+      setTimeout(() => {
+        const serchInput = getByTestId('search');
+        const filterSelected = getByTestId('select');
+        fireEvent.change(filterSelected, {target: {value: 'title'}});
+        fireEvent.change(serchInput, {target: {value: 'Res'}});
+        expect(queryByText('Movimentação')).not.toBeInTheDocument();
+        expect(getAllByText('Resgate')).toBeTruthy();
+      }, 2000);
     });
   });
 
-  it('should render table with title defined by selected options', async () => {
-    const {getByTestId, getByText} = render(<TransactionsList />);
-
-    const filterSelected = getByTestId('select');
-    fireEvent.change(filterSelected, {target: {value: 'title'}});
-
-    await waitFor(() => {
-      expect(getByText('título')).toBeTruthy();
-    });
-  });
-
-  it('should render from option selected as title and searched', async () => {
-    const {getByTestId, getAllByText} = render(<TransactionsList />);
-
-    const serchInput = getByTestId('search');
-    const filterSelected = getByTestId('select');
-    fireEvent.change(filterSelected, {target: {value: 'title'}});
-    fireEvent.change(serchInput, {target: {value: 'Res'}});
+  it('should filter by the status created', async () => {
+    const {getByTestId, getAllByText, queryByText} = render(
+      <TransactionsList />,
+    );
 
     await waitFor(() => {
-      expect(getAllByText('Resgate')).toBeTruthy();
-    });
-  });
-
-  it('should render from option selected as status and searched', async () => {
-    const {getByTestId, getAllByText} = render(<TransactionsList />);
-
-    const serchInput = getByTestId('search');
-    const filterSelected = getByTestId('select');
-    fireEvent.change(filterSelected, {target: {value: 'status'}});
-    fireEvent.change(serchInput, {target: {value: 'crea'}});
-
-    await waitFor(() => {
-      expect(getAllByText('created')).toBeTruthy();
+      setTimeout(() => {
+        const filterSelected = getByTestId('select');
+        const serchInput = getByTestId('search');
+        fireEvent.change(filterSelected, {target: {value: 'status'}});
+        fireEvent.change(serchInput, {target: {value: 'crea'}});
+        expect(queryByText('processed')).not.toBeInTheDocument();
+        expect(getAllByText('created')).toBeTruthy();
+      }, 2000);
     });
   });
 });

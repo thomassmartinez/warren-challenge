@@ -1,11 +1,6 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
 import {Modal} from '.';
-
-/* tive que mockar a funcao pq estava dando um erro de line-scape, mesmo eu 
-passando o valor certo. Pesquisei na web e achei umas issues q teria q baixar uma
-lib para resolver o problema do Intl.NumberFormat, mas n sei até q ponto seria valido
-*/
 
 const mock = {
   transactionData: {

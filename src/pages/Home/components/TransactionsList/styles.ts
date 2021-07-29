@@ -62,7 +62,6 @@ export const Table = styled.table`
     padding: 15px 30px;
     border: 0;
     background: var(--white);
-    text-transform: lowercase;
   }
 
   @media screen and (max-width: 700px) and (min-width: 350px) {

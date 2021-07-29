@@ -64,19 +64,19 @@ export const TransactionsList: React.FC = () => {
   const searchItem = useCallback(
     (e, type) => {
       if (type === 'title') {
-        const itemSearch = transactions.filter((i) => {
+        const itemsSearch = transactions.filter((i) => {
           return i.title
             .toLocaleLowerCase()
             .includes(e.target.value.toLowerCase());
         });
-        setFilterTransaction(itemSearch);
+        setFilterTransaction(itemsSearch);
       } else {
-        const itemSearch = transactions.filter((i) => {
-          return i.status
+        const itemsSearch = transactions.filter((transaction) =>
+          transaction.status
             .toLocaleLowerCase()
-            .includes(e.target.value.toLowerCase());
-        });
-        setFilterTransaction(itemSearch);
+            .includes(e.target.value.toLowerCase()),
+        );
+        setFilterTransaction(itemsSearch);
       }
     },
     [transactions],
@@ -92,7 +92,7 @@ export const TransactionsList: React.FC = () => {
         <Content>
           <Search
             type="text"
-            placeholder="Pesquise pelo titulo"
+            placeholder={`Search for ${filterSelected}`}
             data-testid="search"
             onChange={(e) => searchItem(e, filterSelected)}
           />
@@ -103,10 +103,10 @@ export const TransactionsList: React.FC = () => {
           <Table>
             <thead>
               <tr>
-                <th>Título</th>
-                <th>Descrição</th>
+                <th>Title</th>
+                <th>Description</th>
                 <th>Status</th>
-                <th>Valor</th>
+                <th>Price</th>
               </tr>
             </thead>
             <tbody>
