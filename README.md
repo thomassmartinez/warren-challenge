@@ -51,7 +51,8 @@ Dentro da pasta src foi onde alterei a arquitetura.
 
     Local onde configurei a minha chamada da api e criei os arquivos onde será feita as chamadas.
 
-    Obs: decidi exportar "TransactionsServices" ao invés de exportar chamada por chamada, pois na minha visão fica mais facil de identificar de onte ta vindo aquela requisição.
+    Obs: decidi exportar "TransactionsServices" ao invés de exportar chamada por chamada,
+    pois na minha visão fica mais facil de identificar de onte ta vindo aquela requisição.
 
 ## Utils:
 
@@ -70,10 +71,10 @@ Descobri como resolveria o problema no meu test, mas não sei se seria a melhor 
 No teste de pesquisa por status ou titulo, estava tendo um problema de que, quando eu pesquiso não dava tempo de salvar o novo valor no meu state. Usando o await waitFor continuava a dando o problema, então pra ver se o problema erra esse que imagina, usei o SetTimeout, e vi que funcionou.
 Pesquisei outras alternativas para não usar o timeout, mas sem sucesso. Tentei até funcão do jest "advanceTimersByTime", mas não rolou.
 
-# Código:
+# Coisa que poderia melhoria:
 
-Utilizei as principais metodos do React: (useState, useEffect e useCallback);
+Fiz o projeto simples que atendia o que foi pedido, decidi focar mais nos testes, porém tive alguns problemas, mas ao menos consegui identifica-los e alguns resolve-los, talvez não sendo da melhor forma. Por exemplo o timeout.
 
-- No meu getTransactions eu seto meu response em dois state, pois um eu utilizo para ser comparativo do outro.
-- Fiz uma função de alterar o state de Modal, onde eu passo uma props pro meus styled.
-- Fiz o meu componente todo responsivo, e quando chega na largura de modal, deixei nativo a table colocar o scroll na tela.
+Não gostaria de ter usado o timeout dentro um waitFor, mesmo tendo uma propriedade dentro do waitFor(() => {}, {timeout: 3000}). Porém mesmo usando essa propriedade percebi que ele não estava esperando o time para alterar o state. Meu teste só passava quando tinha o settimeout. Por não ter mais tempo para pesquisar mais sobre o assunto, decidi faze-lo funcionar, mesmo não sendo da melhor forma (na minha visão).
+
+Obrigado pela oportunidade. Até logo!
