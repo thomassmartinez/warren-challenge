@@ -5,6 +5,8 @@ import {ITransaction, TransactionsServices} from 'services/api/transactions';
 import {Modal} from 'pages/Home/components/TransactionModal';
 import {formatCurrency} from 'utils/formatCurrency';
 
+type FilterType = 'title' | 'status';
+
 export const TransactionsList: React.FC = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [transaction, setTransaction] = useState<ITransaction>(
@@ -14,7 +16,7 @@ export const TransactionsList: React.FC = () => {
     [],
   );
 
-  const [filterSelected, setFilterSelected] = useState('status');
+  const [filterSelected, setFilterSelected] = useState<FilterType>('status');
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,6 +24,7 @@ export const TransactionsList: React.FC = () => {
   const getTransactions = useCallback(async () => {
     try {
       setLoading(true);
+      setFilterTransaction([]);
       const response = await TransactionsServices.getTransactions();
       setTransactions(response);
       setFilterTransaction(response);
@@ -62,29 +65,24 @@ export const TransactionsList: React.FC = () => {
   );
 
   const searchItem = useCallback(
-    (e, type) => {
-      if (type === 'title') {
-        const itemsSearch = transactions.filter((i) => {
-          return i.title
-            .toLocaleLowerCase()
-            .includes(e.target.value.toLowerCase());
-        });
-        setFilterTransaction(itemsSearch);
-      } else {
-        const itemsSearch = transactions.filter((transaction) =>
-          transaction.status
-            .toLocaleLowerCase()
-            .includes(e.target.value.toLowerCase()),
-        );
-        setFilterTransaction(itemsSearch);
-      }
+    (e, type: FilterType) => {
+      const filteredItems = transactions.filter((i) => {
+        return i[type]
+          .toLocaleLowerCase()
+          .includes(e.target.value.toLowerCase());
+      });
+      setFilterTransaction(filteredItems);
     },
     [transactions],
   );
 
-  const handleSelectChange = useCallback((e) => {
-    setFilterSelected(e.target.value);
-  }, []);
+  const handleSelectChange = useCallback(
+    (e) => {
+      setFilterSelected(e.target.value);
+      getTransactions();
+    },
+    [getTransactions],
+  );
 
   return (
     <>
@@ -96,7 +94,7 @@ export const TransactionsList: React.FC = () => {
             data-testid="search"
             onChange={(e) => searchItem(e, filterSelected)}
           />
-          <Select onChange={(e) => handleSelectChange(e)} data-testid="select">
+          <Select onChange={handleSelectChange} data-testid="select">
             <option value="status">status</option>
             <option value="title">título</option>
           </Select>
@@ -110,7 +108,7 @@ export const TransactionsList: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {!loading &&
+              {!loading && filterTransaction.length > 1 ? (
                 filterTransaction.map(
                   ({id, description, amount, title, status}) => (
                     <tr key={id} onClick={() => handleModalOpenClose(id)}>
@@ -120,7 +118,15 @@ export const TransactionsList: React.FC = () => {
                       <td>{formatCurrency(amount)}</td>
                     </tr>
                   ),
-                )}
+                )
+              ) : (
+                <tr>
+                  <td>Nenhum dado a ser apresentado</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </Content>
