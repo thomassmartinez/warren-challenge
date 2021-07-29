@@ -26,6 +26,9 @@ export const Content = styled.div`
   padding: 15px 20px;
   border-radius: 10px;
   background: #fff;
+  @media screen and (max-width: 700px) {
+    width: 80%;
+  }
 `;
 export const Section = styled.div`
   width: 100%;
@@ -76,6 +79,9 @@ export const BoxProgress = styled.div`
 export const H1 = styled.h1`
   font-size: 40px;
   font-weight: 600px;
+  @media screen and (max-width: 700px) {
+    font-size: 25px;
+  }
 `;
 
 export const H5 = styled(H1)`
@@ -84,6 +90,9 @@ export const H5 = styled(H1)`
 
 export const H6 = styled(H1)`
   font-size: 18px;
+  @media screen and (max-width: 700px) {
+    font-size: 15px;
+  }
 `;
 
 export const Divider = styled.hr`
