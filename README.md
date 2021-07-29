@@ -75,6 +75,6 @@ Pesquisei outras alternativas para não usar o timeout, mas sem sucesso. Tentei 
 
 Fiz o projeto simples que atendia o que foi pedido, decidi focar mais nos testes, porém tive alguns problemas, mas ao menos consegui identifica-los e alguns resolve-los, talvez não sendo da melhor forma. Por exemplo o timeout.
 
-Não gostaria de ter usado o timeout dentro um waitFor, mesmo tendo uma propriedade dentro do waitFor(() => {}, {timeout: 3000}). Porém mesmo usando essa propriedade percebi que ele não estava esperando o time para alterar o state. Meu teste só passava quando tinha o settimeout. Por não ter mais tempo para pesquisar mais sobre o assunto, decidi faze-lo funcionar, mesmo não sendo da melhor forma (na minha visão).
+Não gostaria de ter usado o timeout dentro um waitFor, mesmo tendo uma propriedade dentro do `waitFor(() => {}, {timeout: 3000})`. Porém mesmo usando essa propriedade percebi que ele não estava esperando o time para alterar o state. Meu teste só passava quando tinha o settimeout. Por não ter mais tempo para pesquisar mais sobre o assunto, decidi faze-lo funcionar, mesmo não sendo da melhor forma (na minha visão).
 
 Obrigado pela oportunidade. Até logo!
