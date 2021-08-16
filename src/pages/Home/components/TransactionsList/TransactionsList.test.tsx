@@ -64,7 +64,6 @@ jest.mock('services/api/transactions', () => ({
 describe('Transactions List', () => {
   it('should render table with data', async () => {
     const {getAllByText} = render(<TransactionsList />);
-
     await waitFor(() => {
       expect(getAllByText('Resgate')).toBeTruthy();
       expect(getAllByText('et labore proident aute nulla')).toBeTruthy();
@@ -76,15 +75,15 @@ describe('Transactions List', () => {
       <TransactionsList />,
     );
 
+    const filterSelected = await waitFor(() => getByTestId('select'));
+    const serchInput = await waitFor(() => getByTestId('search'));
+
+    fireEvent.change(filterSelected, {target: {value: 'title'}});
+    fireEvent.change(serchInput, {target: {value: 'Res'}});
+
     await waitFor(() => {
-      setTimeout(() => {
-        const serchInput = getByTestId('search');
-        const filterSelected = getByTestId('select');
-        fireEvent.change(filterSelected, {target: {value: 'title'}});
-        fireEvent.change(serchInput, {target: {value: 'Res'}});
-        expect(queryByText('Movimentação')).not.toBeInTheDocument();
-        expect(getAllByText('Resgate')).toBeTruthy();
-      }, 2000);
+      expect(queryByText('Movimentação')).not.toBeTruthy();
+      expect(getAllByText('Resgate')).toBeTruthy();
     });
   });
 
@@ -93,15 +92,15 @@ describe('Transactions List', () => {
       <TransactionsList />,
     );
 
+    const filterSelected = await waitFor(() => getByTestId('select'));
+    const serchInput = await waitFor(() => getByTestId('search'));
+
+    fireEvent.change(filterSelected, {target: {value: 'title'}});
+    fireEvent.change(serchInput, {target: {value: 'Res'}});
+
     await waitFor(() => {
-      setTimeout(() => {
-        const filterSelected = getByTestId('select');
-        const serchInput = getByTestId('search');
-        fireEvent.change(filterSelected, {target: {value: 'status'}});
-        fireEvent.change(serchInput, {target: {value: 'crea'}});
-        expect(queryByText('processed')).not.toBeInTheDocument();
-        expect(getAllByText('created')).toBeTruthy();
-      }, 2000);
+      expect(queryByText('Movimentação')).not.toBeTruthy();
+      expect(getAllByText('Resgate')).toBeTruthy();
     });
   });
 });
